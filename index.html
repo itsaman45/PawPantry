@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PawPantry | Smart Pet Food Refills</title>
+    <style>
+      :root {
+        --green: #286b4e;
+        --green2: #dff2e7;
+        --cream: #fbf8f1;
+        --ink: #20332a;
+        --muted: #6d7b72;
+        --orange: #f3a65a;
+        --line: #e3e9e3;
+        --white: #fff;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          sans-serif;
+        background: var(--cream);
+        color: var(--ink);
+      }
+      header {
+        background: var(--white);
+        border-bottom: 1px solid var(--line);
+        position: sticky;
+        top: 0;
+        z-index: 5;
+      }
+      .nav {
+        max-width: 1100px;
+        margin: auto;
+        padding: 15px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 850;
+        font-size: 1.25rem;
+        letter-spacing: -0.5px;
+      }
+      .logo {
+        display: grid;
+        place-items: center;
+        background: var(--green);
+        color: white;
+        width: 39px;
+        height: 39px;
+        border-radius: 13px;
+        font-size: 22px;
+      }
+      .nav small {
+        color: var(--muted);
+      }
+      .wrap {
+        max-width: 1100px;
+        margin: auto;
+        padding: 28px 22px 60px;
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 22px;
+        align-items: stretch;
+        margin-bottom: 24px;
+      }
+      .hero-main {
+        background: var(--green);
+        color: white;
+        border-radius: 24px;
+        padding: 32px;
+        position: relative;
+        overflow: hidden;
+        min-height: 240px;
+      }
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 1.6px;
+        font-size: 0.72rem;
+        font-weight: 800;
+        opacity: 0.8;
+      }
+      h1 {
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.05;
+        margin: 13px 0;
+      }
+      .hero p {
+        max-width: 520px;
+        color: #e0f1e7;
+        line-height: 1.6;
+      }
+      .paw-art {
+        position: absolute;
+        right: 25px;
+        bottom: 12px;
+        font-size: 110px;
+        opacity: 0.18;
+        transform: rotate(-15deg);
+      }
+      .hero-side {
+        background: #f7e7d4;
+        border-radius: 24px;
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .hero-side .big {
+        font-size: 2.3rem;
+        font-weight: 850;
+        letter-spacing: -1px;
+      }
+      .hero-side p {
+        line-height: 1.5;
+        color: #66513d;
+        margin-bottom: 0;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin: 18px 0 26px;
+      }
+      .stat,
+      .panel,
+      .metric {
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 18px;
+      }
+      .stat span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+      .stat strong {
+        display: block;
+        font-size: 1.45rem;
+        margin-top: 7px;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      .panel h2 {
+        font-size: 1.15rem;
+        margin: 0 0 6px;
+      }
+      .sub {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin: 0 0 18px;
+      }
+      label {
+        display: block;
+        font-size: 0.84rem;
+        font-weight: 700;
+        margin: 13px 0 7px;
+      }
+      input,
+      select {
+        width: 100%;
+        border: 1px solid #d5dfd7;
+        background: #fff;
+        border-radius: 10px;
+        padding: 12px 13px;
+        font: inherit;
+        color: var(--ink);
+        outline: none;
+      }
+      input:focus,
+      select:focus {
+        border-color: var(--green);
+        box-shadow: 0 0 0 3px #286b4e18;
+      }
+      .fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      button {
+        border: 0;
+        border-radius: 11px;
+        padding: 12px 16px;
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+        transition:
+          transform 0.12s,
+          opacity 0.12s;
+      }
+      button:hover {
+        transform: translateY(-1px);
+      }
+      .primary {
+        background: var(--green);
+        color: white;
+      }
+      .secondary {
+        background: var(--green2);
+        color: var(--green);
+      }
+      .full {
+        width: 100%;
+        margin-top: 17px;
+      }
+      .result {
+        background: #f0f7f1;
+        border: 1px solid #d4e8d8;
+        border-radius: 14px;
+        padding: 16px;
+        margin-top: 16px;
+      }
+      .result strong {
+        font-size: 1.1rem;
+      }
+      .result p {
+        margin: 7px 0;
+        color: #4c6455;
+        line-height: 1.5;
+      }
+      .pill {
+        display: inline-block;
+        background: #e5f3e9;
+        color: var(--green);
+        padding: 5px 9px;
+        border-radius: 99px;
+        font-size: 0.75rem;
+        font-weight: 800;
+      }
+      .order-card {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        border: 1px solid var(--line);
+        padding: 14px;
+        border-radius: 14px;
+        margin-top: 12px;
+      }
+      .food-icon {
+        width: 56px;
+        height: 56px;
+        flex-shrink: 0;
+        display: grid;
+        place-items: center;
+        background: #fff0dd;
+        border-radius: 15px;
+        font-size: 30px;
+      }
+      .order-card p {
+        margin: 5px 0;
+        color: var(--muted);
+        font-size: 0.86rem;
+        line-height: 1.4;
+      }
+      .order-card .price {
+        margin-left: auto;
+        text-align: right;
+        font-weight: 850;
+        white-space: nowrap;
+      }
+      .notice {
+        font-size: 0.78rem;
+        color: var(--muted);
+        line-height: 1.5;
+        margin-top: 15px;
+      }
+      .orders {
+        margin-top: 20px;
+      }
+      .order-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        border-top: 1px solid var(--line);
+        padding: 13px 0;
+      }
+      .order-row p {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+      .empty {
+        padding: 20px;
+        text-align: center;
+        background: #fafcf9;
+        border: 1px dashed #cbd9ce;
+        border-radius: 12px;
+        color: var(--muted);
+      }
+      footer {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.8rem;
+        padding: 22px;
+      }
+      .toast {
+        position: fixed;
+        bottom: 22px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #20332a;
+        color: white;
+        padding: 13px 18px;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px #0002;
+        z-index: 20;
+        display: none;
+        max-width: 90%;
+        text-align: center;
+      }
+      @media (max-width: 760px) {
+        .hero,
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .hero-main {
+          min-height: 250px;
+        }
+        .stats {
+          grid-template-columns: 1fr;
+        }
+        .fields {
+          grid-template-columns: 1fr;
+        }
+        .hero-side {
+          min-height: 170px;
+        }
+        .paw-art {
+          font-size: 80px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="nav">
+        <div class="brand">
+          <div class="logo">🐾</div>
+          <div>
+            PawPantry<small
+              style="
+                display: block;
+                font-size: 0.68rem;
+                font-weight: 600;
+                letter-spacing: 0.3px;
+              "
+              >SMART REFILLS FOR HAPPY DOGS</small
+            >
+          </div>
+        </div>
+        <small>Prototype · Mumbai, India</small>
+      </div>
+    </header>
+    <main class="wrap">
+      <section class="hero">
+        <div class="hero-main">
+          <div class="eyebrow">Never run out of their favourite food</div>
+          <h1>Refills that arrive<br />right on time.</h1>
+          <p>
+            Track your dog's food, predict when the bag will run out, and
+            arrange a refill from a nearby partner shop.
+          </p>
+          <span class="pill">EARLY MVP DEMO</span>
+          <div class="paw-art">🐾</div>
+        </div>
+        <div class="hero-side">
+          <div>
+            <div class="eyebrow" style="color: #8a6543; opacity: 1">
+              How it works
+            </div>
+            <div class="big">3 simple steps</div>
+          </div>
+          <p>
+            01 Add your dog's details<br />02 Get a run-out forecast<br />03
+            Confirm a refill order
+          </p>
+        </div>
+      </section>
+      <section class="stats">
+        <div class="stat">
+          <span>Predicted bag duration</span
+          ><strong id="durationStat">— days</strong>
+        </div>
+        <div class="stat">
+          <span>Forecast run-out date</span
+          ><strong id="runoutStat">Set a profile</strong>
+        </div>
+        <div class="stat">
+          <span>Refill reminder date</span><strong id="reminderStat">—</strong>
+        </div>
+      </section>
+      <section class="layout">
+        <div class="panel">
+          <h2>🐶 Your dog's food profile</h2>
+          <p class="sub">
+            Enter the details from your current bag. The forecast is an
+            estimate, not veterinary feeding advice.
+          </p>
+          <form id="profileForm">
+            <label for="dogName">Dog's name</label
+            ><input
+              id="dogName"
+              placeholder="e.g. Bruno"
+              value="Bruno"
+              required
+            />
+            <div class="fields">
+              <div>
+                <label for="weight">Dog weight (kg)</label
+                ><input
+                  id="weight"
+                  type="number"
+                  min="1"
+                  max="100"
+                  step=".5"
+                  value="20"
+                  required
+                />
+              </div>
+              <div>
+                <label for="bagSize">Bag size</label
+                ><select id="bagSize">
+                  <option value="1.5">1.5 kg</option>
+                  <option value="3">3 kg</option>
+                  <option value="5">5 kg</option>
+                  <option value="10" selected>10 kg</option>
+                  <option value="15">15 kg</option>
+                </select>
+              </div>
+            </div>
+            <div class="fields">
+              <div>
+                <label for="brand">Food brand / type</label
+                ><input
+                  id="brand"
+                  value="Dry dog food"
+                  placeholder="Food brand"
+                  required
+                />
+              </div>
+              <div>
+                <label for="opened">Bag opened on</label
+                ><input id="opened" type="date" required />
+              </div>
+            </div>
+            <button class="primary full" type="submit">
+              Calculate my refill forecast →
+            </button>
+          </form>
+          <div id="forecast" class="result" aria-live="polite">
+            <strong>Your forecast will appear here</strong>
+            <p>
+              Save your profile to calculate an estimated run-out date and
+              reminder.
+            </p>
+          </div>
+        </div>
+        <div class="panel">
+          <h2>🛍️ Refill from a nearby shop</h2>
+          <p class="sub">
+            Review your estimated refill and place a demo order. No payment is
+            taken and no real delivery is booked.
+          </p>
+          <div class="order-card">
+            <div class="food-icon">🥣</div>
+            <div>
+              <strong id="productName">Dry dog food</strong>
+              <p id="productMeta">10 kg bag · Sample listing</p>
+              <span class="pill">Same food preference</span>
+            </div>
+            <div class="price" id="productPrice">₹1,800</div>
+          </div>
+          <div class="fields">
+            <div>
+              <label for="deliveryDate">Preferred delivery date</label
+              ><input type="date" id="deliveryDate" />
+            </div>
+            <div>
+              <label for="shop">Partner shop</label
+              ><select id="shop">
+                <option>Happy Tails Pet Shop</option>
+                <option>Pet Corner Mumbai</option>
+                <option>Local Pet Supplies</option>
+              </select>
+            </div>
+          </div>
+          <label for="address">Delivery area / address</label
+          ><input id="address" placeholder="e.g. Andheri West, Mumbai" />
+          <button id="orderBtn" class="primary full">
+            Confirm demo refill
+          </button>
+          <p class="notice">
+            Demo data only: shop names, prices and order status are
+            illustrative. This prototype does not connect to a real shop,
+            payment gateway, SMS or WhatsApp.
+          </p>
+        </div>
+      </section>
+      <section class="panel orders">
+        <h2>📦 Your refill activity</h2>
+        <p class="sub">
+          Orders placed in this demo appear here on this device.
+        </p>
+        <div id="ordersList" class="empty">
+          No refills yet. Calculate a forecast and confirm a demo refill to try
+          the flow.
+        </div>
+      </section>
+    </main>
+    <footer>PawPantry · Basic working prototype · Sample data only</footer>
+    <div id="toast" class="toast" role="status"></div>
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const today = new Date();
+      const dateInput = (d) => {
+        const x = new Date(d);
+        x.setMinutes(x.getMinutes() - x.getTimezoneOffset());
+        return x.toISOString().slice(0, 10);
+      };
+      $("opened").value = dateInput(today);
+      $("deliveryDate").value = dateInput(new Date(today.getTime() + 86400000));
+      let profile = null,
+        orders = [];
+      try {
+        profile = JSON.parse(
+          localStorage.getItem("pawpantryProfile") || "null",
+        );
+        orders = JSON.parse(localStorage.getItem("pawpantryOrders") || "[]");
+      } catch (e) {}
+      function addDays(date, days) {
+        const d = new Date(date + "T12:00:00");
+        d.setDate(d.getDate() + days);
+        return d;
+      }
+      function pretty(d) {
+        const date = d instanceof Date ? d : new Date(`${d}T12:00:00`);
+        return date.toLocaleDateString("en-IN", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        });
+      }
+      function calc() {
+        const name = $("dogName").value.trim(),
+          weight = Number($("weight").value),
+          bag = Number($("bagSize").value),
+          opened = $("opened").value,
+          brand = $("brand").value.trim();
+        if (!name || !weight || weight <= 0 || !opened || !brand) {
+          toast("Please complete the dog profile first.");
+          return;
+        }
+        // Demo assumption from the presentation: dogs consume about 2.5% of body weight daily.
+        const daily = weight * 0.025;
+        const days = Math.max(1, Math.ceil(bag / daily));
+        const runout = addDays(opened, days);
+        const buffer = Math.max(4, Math.ceil(days * 0.2));
+        const reminder = addDays(dateInput(runout), -buffer);
+        profile = {
+          name,
+          weight,
+          bag,
+          opened,
+          brand,
+          daily,
+          days,
+          runout: dateInput(runout),
+          buffer,
+          reminder: dateInput(reminder),
+        };
+        localStorage.setItem("pawpantryProfile", JSON.stringify(profile));
+        renderProfile();
+        toast("Forecast calculated and profile saved on this device.");
+      }
+      function renderProfile() {
+        if (!profile) return;
+        $("dogName").value = profile.name;
+        $("weight").value = profile.weight;
+        $("bagSize").value = String(profile.bag);
+        $("opened").value = profile.opened;
+        $("brand").value = profile.brand;
+        $("durationStat").textContent = profile.days + " days";
+        $("runoutStat").textContent = pretty(profile.runout);
+        $("reminderStat").textContent = pretty(profile.reminder);
+        $("productName").textContent = profile.brand;
+        $("productMeta").textContent =
+          profile.bag + " kg bag · For " + profile.name;
+        const price = Math.round(profile.bag * 180);
+        $("productPrice").textContent = "₹" + price.toLocaleString("en-IN");
+        $("deliveryDate").min = dateInput(today);
+        $("deliveryDate").value =
+          profile.reminder < dateInput(today)
+            ? dateInput(new Date(today.getTime() + 86400000))
+            : profile.reminder;
+        $("forecast").innerHTML =
+          "<strong>📅 " +
+          profile.name +
+          "’s estimated food timeline</strong><p>Estimated daily food: <b>" +
+          Math.round(profile.daily * 1000) +
+          " g/day</b>, using the prototype’s 2.5% body-weight assumption.</p><p>Bag may run out around <b>" +
+          pretty(profile.runout) +
+          "</b>.</p><p>Suggested reminder: <b>" +
+          pretty(profile.reminder) +
+          "</b> (" +
+          profile.buffer +
+          ' days before run-out).</p><p style="font-size:.78rem">Actual feeding needs vary by food, age, activity and health. Check the package guide or ask your vet.</p>';
+      }
+      function renderOrders() {
+        if (!orders.length) {
+          $("ordersList").className = "empty";
+          $("ordersList").textContent =
+            "No refills yet. Calculate a forecast and confirm a demo refill to try the flow.";
+          return;
+        }
+        $("ordersList").className = "";
+        $("ordersList").innerHTML = orders
+          .map(
+            (o) =>
+              '<div class="order-row"><div><strong>' +
+              esc(o.pet) +
+              " · " +
+              esc(o.food) +
+              "</strong><p>" +
+              esc(o.shop) +
+              " · " +
+              esc(o.date) +
+              " · " +
+              esc(o.area || "Area not provided") +
+              '</p></div><div style="text-align:right"><span class="pill">' +
+              esc(o.status) +
+              "</span><p>" +
+              esc(o.price) +
+              "</p></div></div>",
+          )
+          .join("");
+      }
+      function esc(s) {
+        return String(s).replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+      }
+      function toast(msg) {
+        const t = $("toast");
+        t.textContent = msg;
+        t.style.display = "block";
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => (t.style.display = "none"), 2600);
+      }
+      $("profileForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        calc();
+      });
+      $("orderBtn").addEventListener("click", () => {
+        if (!profile) {
+          toast("Calculate your dog’s forecast before placing a refill.");
+          return;
+        }
+        const date = $("deliveryDate").value;
+        if (!date) {
+          toast("Choose a preferred delivery date.");
+          return;
+        }
+        if (date < dateInput(today)) {
+          toast("Choose today or a future delivery date.");
+          return;
+        }
+        const order = {
+          id: Date.now(),
+          pet: profile.name,
+          food: profile.brand + " · " + profile.bag + " kg",
+          shop: $("shop").value,
+          date: pretty(date),
+          area: $("address").value.trim(),
+          price: $("productPrice").textContent,
+          status: "Demo order placed",
+        };
+        orders.unshift(order);
+        localStorage.setItem("pawpantryOrders", JSON.stringify(orders));
+        renderOrders();
+        toast("Demo refill order saved! No real order was sent.");
+      });
+      if (profile) renderProfile();
+      else {
+        $("durationStat").textContent = "— days";
+        $("runoutStat").textContent = "Set a profile";
+        $("reminderStat").textContent = "—";
+      }
+      renderOrders();
+    </script>
+  </body>
+</html>
